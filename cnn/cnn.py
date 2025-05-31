@@ -7,7 +7,7 @@ from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 from tensorflow.keras.utils import to_categorical
 
-MODEL_PATH = "cnn/modelo_mnist.h5"
+MODEL_PATH = "modelo_mnist.h5"
 
 # Verificar si el modelo ya existe para cargarlo o entrenarlo
 if os.path.exists(MODEL_PATH):
