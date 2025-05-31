@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bienvenido</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #141e30, #243b55);
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5em;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: normal;
+      margin-bottom: 1em;
+    }
+
+    p {
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin-bottom: 2em;
+    }
+
+    @media (max-width: 500px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      p {
+        font-size: 1rem;
+        padding: 0 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>¡Bienvenido de nuevo!</h1>
+  <h2>Congreso de Ciencia de Datos e Inteligencia Artificial</h2>
+  <p>
+    Te has autenticado exitosamente. Gracias por ser parte del <strong>Congreso CHIQUIMULA 2025</strong>.
+    Prepárate para descubrir, aprender y conectar con los líderes del mundo tecnológico. ¡Tu participación
+    impulsa el futuro de la innovación!
+  </p>
+
+</body>
+</html>

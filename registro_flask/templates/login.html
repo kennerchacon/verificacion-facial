@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <h2>Login Usuario</h2>
+    <input type="text" id="nombre" placeholder="Ingresa tu nombre" required />
+    <br /><br />
+    <video
+      id="video"
+      autoplay
+      playsinline
+      style="display: block; max-width: 100%; height: auto"
+    ></video>
+    <br />
+
+    <!-- Loader -->
+    <p id="loader" style="display: none; font-weight: bold; color: #3498db">
+      ⏳ Verificando...
+    </p>
+    <button id="btnVerificar">Verificar</button>
+
+    <p id="mensaje"></p>
+    <canvas id="canvas" style="display: none"></canvas>
+
+    <script>
+      const video = document.getElementById("video");
+      const canvas = document.getElementById("canvas");
+      const btnVerificar = document.getElementById("btnVerificar");
+      const mensaje = document.getElementById("mensaje");
+      const loader = document.getElementById("loader");
+
+      async function iniciarCamara() {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+          });
+          video.srcObject = stream;
+
+          video.onloadedmetadata = () => {
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+          };
+        } catch (err) {
+          mensaje.textContent =
+            "❌ No se pudo acceder a la cámara: " + err.message;
+        }
+      }
+
+      function verificar() {
+        const nombre = document.getElementById("nombre").value.trim();
+        if (!nombre) {
+          mensaje.textContent = "❌ Por favor ingresa un nombre.";
+          return;
+        }
+
+        mensaje.textContent = "";
+        loader.style.display = "block";
+        btnVerificar.disabled = true;
+
+        const context = canvas.getContext("2d");
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const dataURL = canvas.toDataURL("image/jpeg");
+
+        fetch("/verificar", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: `image=${encodeURIComponent(
+            dataURL
+          )}&nombre=${encodeURIComponent(nombre)}`,
+        })
+          .then((res) => res.text())
+          .then((texto) => {
+            loader.style.display = "none";
+            btnVerificar.disabled = false;
+            mensaje.textContent = texto;
+
+            // Si la verificación fue exitosa, redirige
+            if (texto.includes("✅ Usuario verificado correctamente")) {
+              setTimeout(() => {
+                window.location.href = "/bienvenido";
+              }, 1000); // Espera 1 segundo para que el mensaje se muestre brevemente
+            }
+          })
+
+          .catch((err) => {
+            loader.style.display = "none";
+            btnVerificar.disabled = false;
+            mensaje.textContent = "❌ Error en la verificación: " + err.message;
+          });
+      }
+
+      btnVerificar.addEventListener("click", verificar);
+      iniciarCamara();
+    </script>
+  </body>
+</html>

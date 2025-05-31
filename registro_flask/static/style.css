@@ -1,0 +1,48 @@
+/* Asegura que html y body ocupen todo el alto */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Body con flexbox para centrar contenido */
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centra verticalmente */
+  align-items: center;     /* Centra horizontalmente */
+  height: 100vh;           /* 100% de la altura de la ventana */
+  width: 100vw;            /* 100% del ancho de la ventana */
+  text-align: center;
+  background-color: #f4f4f4; /* Puedes cambiar el color de fondo */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;           /* Espacio interno para que no quede pegado */
+  box-sizing: border-box;
+}
+
+/* Estilo para los botones para que se vean mejor y responsivos */
+button {
+  margin: 10px;
+  padding: 12px 24px;
+  font-size: 1.2rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background-color: #3498db;
+  color: white;
+  transition: background-color 0.3s ease;
+  min-width: 140px;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 480px) {
+  button {
+    width: 100%;   /* Botones a ancho completo en móviles */
+    font-size: 1rem;
+    padding: 10px;
+  }
+}
